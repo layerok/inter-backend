@@ -1,2 +1,1 @@
 ﻿# Intersog backend
-# inter-backend
