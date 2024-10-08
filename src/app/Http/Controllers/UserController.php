@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -29,13 +30,16 @@ class UserController extends Controller
 
     public function store(): JsonResource
     {
-        $userData = request()->only(
-            'email',
-            'name',
-            'password'
-        );
+        $email = request()->input('email');
+        $name = request()->input('name');
+        $password = request()->input('password');
 
-        $user = new User($userData);
+        $user = new User([
+            'email' => $email,
+            'name' => $name,
+            'password' => Hash::make($password)
+        ]);
+
         $user->save();
 
         return new UserResource($user);
