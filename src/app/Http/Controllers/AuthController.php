@@ -45,7 +45,7 @@ class AuthController extends Controller
         return new UserResource(Auth::user());
     }
 
-    public function initializeCsrfCookie(Request $request): mixed
+    public function initializeCsrfCookie(Request $request)
     {
         if ($request->expectsJson()) {
             return new JsonResponse(null, HttpResponse::HTTP_NO_CONTENT);
