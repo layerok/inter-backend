@@ -51,17 +51,12 @@ class UserController extends Controller
 
     public function update(User $user): JsonResource
     {
-        $email = request()->input('email');
-        $name = request()->input('name');
-        $role = request()->input('role');
         $password = request()->input('password');
 
-        $user->update([
-            'email' => $email,
-            'name' => $name,
-            'role' => $role,
-            'password' => Hash::make($password)
-        ]);
+        $user->update(array_merge(
+            request()->only(['email', 'name', 'role']),
+            $password ? ['password' => Hash::make($password)]: []
+        ));
 
         return new UserResource($user);
     }
