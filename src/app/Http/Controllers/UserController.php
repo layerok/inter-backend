@@ -32,6 +32,11 @@ class UserController extends Controller
 
     public function store(): JsonResource
     {
+        request()->validate([
+            'email' => 'required|unique:users',
+            'name' => 'required',
+            'password' => 'required'
+        ]);
         $email = request()->input('email');
         $name = request()->input('name');
         $role = request()->input('role');
